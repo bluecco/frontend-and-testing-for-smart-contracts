@@ -1,4 +1,8 @@
 require("@nomiclabs/hardhat-waffle");
+const dotenv = require("dotenv");
+dotenv.config({ path: __dirname + "/.env.local" });
+const { PRIVATE_KEY } = process.env;
+console.log(PRIVATE_KEY);
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -19,11 +23,15 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 module.exports = {
   solidity: "0.8.4",
   paths: {
-    artifacts: './src/artifacts',
+    artifacts: "./src/artifacts",
   },
   networks: {
     hardhat: {
-      chainId: 1337
-    }
-  }
+      chainId: 1337,
+    },
+    ropsten: {
+      url: "https://ropsten.infura.io/v3/63c1980cfe80438aa53ee402f57ec5c6",
+      accounts: [`0x${PRIVATE_KEY}`],
+    },
+  },
 };
